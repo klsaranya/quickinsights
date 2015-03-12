@@ -1,0 +1,230 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<link rel = "import" href="../elements/drag-scaling.html">
+<link rel = "import" href="../elements/buttons-multi.html">
+<link rel = "import" href="../elements/buttons-single.html">
+<link rel = "import" href="../elements/star-rate.html">
+<link rel = "import" href="../elements/yes-no.html">
+<link rel = "import" href="../elements/number-scaling.html">
+<link rel = "import" href="../elements/image-grid.html">
+<link rel = "import" href="../elements/yes-noother.html">
+<link rel = "import" href="../elements/image-multi.html">
+
+<link rel = "import" href="../elements/control-box.html">
+
+<polymer-element name="qi-app">
+	<template>
+		<style>
+			:host{
+				background: url(imgs/bg1.jpg);
+				font-family: 'roboto';
+				font-weight: 300;
+				
+			}
+			.quescard{
+				background: rgba(0,0,0,0.4);
+				color: white;
+				padding: 3%;
+				margin: 40px 0px 5px 0px;
+				width: 100%;
+				/*height: inherit;*/
+				box-sizing: border-box;
+
+			}
+			.theme-box{
+				position: absolute;
+				right: 0;
+				top: 0;
+				/*margin: 0px 0px 5px 5px;*/
+			}
+			
+			.container{
+				max-width: 450px;
+				margin: 0;
+				height: 100%;
+				width: inherit;
+				box-sizing: border-box;
+
+			}
+			.whole{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+
+		   <core-header-panel fit>
+
+			  <!-- <core-toolbar>Quick Insights</core-toolbar> -->
+				
+
+			  <div class="theme-box">
+			  	<core-icon-button icon="swap-horiz" on-tap="{{toggleBg}}" ></core-icon-button>
+			  </div>
+			  
+			  <div layout horizontal center-justified center fit>
+			  		<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<!-- <image-multi content="{{data[5]}}"></image-multi>		 -->
+								      	<buttons-multi content="{{data[0]}}"> </buttons-multi>
+
+						</paper-shadow>
+
+						<control-box></control-box>
+						
+					</div>
+			  </div>
+		   	  
+
+		   </core-header-panel>
+					
+		   <!-- <buttons-multi layout vertical content="{{data[2]}}"> </buttons-multi>
+		   <buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
+		   <drag-scaling layout vertical content="{{data[2]}}"> </drag-scaling>
+		   <star-rate layout vertical content="{{data[2]}}"> </star-rate>
+		   <yes-no layout vertical content="{{data[2]}}"> </yes-no>
+		   <yes-noother layout vertical content="{{data[2]}}"> </yes-noother>
+		   <number-scaling layout vertical content="{{data[2]}}"> </number-scaling> -->
+
+	 <!--    <paper-card layout vertical>
+				 	<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
+			    </paper-card> -->
+
+	  <!-- <core-animated-pages id="ani" on-done-event="{{stuff}}" transitions="slide-from-right">
+	    <section layout vertical >
+	     	<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
+	    </section>
+
+	    <section>
+	      	<buttons-multi content="{{data[0]}}"> </buttons-multi>
+	    </section>
+
+	    <section>
+	      <drag-scaling content="{{data[4]}}"></drag-scaling>
+	    </section>
+
+	    <section>
+	       <yes-no content="{{data[1]}}"></yes-no>
+	    </section>
+
+	    <section>
+	    	<star-rate content="{{data[3]}}"></star-rate>
+	    </section>
+
+	    <section>
+	    	<number-scaling content="{{data[3]}}"></number-scaling>
+	    </section>
+
+	    <section>
+	    	<image-grid content="{{data[5]}}"></image-grid>
+	    </section>
+
+	    <section>
+	    	<yes-noother content="{{data[1]}}"></yes-noother>
+	    </section>
+
+	    <section>
+	    	<image-multi content="{{data[5]}}"></image-multi>
+	    </section>
+
+	  </core-animated-pages> -->
+	  
+	</template>
+
+  	<script>
+	  Polymer('qi-app', {
+	  	backgrounds: ["imgs/bg2.png","imgs/bg1.jpg"],
+	  	up: true,
+	    max: 8,
+	   
+	    data: 
+			[{	
+				question: {
+					ques: "With which account do you prefer to login? With which account do you prefer to login? With which account do you prefer to login?",
+					img:  ""
+				}, 
+				options: ["facebook","google","twitter","other"]
+			},
+			{
+				question: {
+					ques: "Do you find the app useful?",
+					img: "http://rocketpost.com/media/open-uri20111206-24308-1i0xk9x-0-large..png"
+				},
+					 options:["yes", "no"]
+			},
+			{
+				question: { 
+					ques: "How satisfied asdfasdfsadfasfasfasdfasfd asdf a sdf as df as fa sf asdfasdfs are you with this purchase?",
+					img: "http://www.morningdressguide.com/wp-content/uploads/2012/08/vintage-hunter-pocket-watch.jpg"
+				},
+				options: ["Extremely satisfied","Very satisfied","Neutral","Somewhat satisfied","Not at all satisfied"]
+			},
+			{
+				question:{
+					ques: "How do you rate the teaching capability of the app?",
+					img: ""
+				}
+			},
+			{
+				question: {
+					ques: "When contacted our support representative, how would you rate them on their knowledge and ability to handle your issue?",
+					img: ""
+				}
+			},
+			{	
+				 question: {
+				 	ques: "Which subject do you like?",
+				 	img: ""
+				 }, 
+				 options: [
+				 	
+				 			{ 
+				 				src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+				 				label: "image1" 
+				 			},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image2"
+			 				},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image3"
+			 				},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image4"
+			 				}
+			 		
+			 		
+			 	]
+			 			  
+			}],
+	  	stuff: function(e,d,t) {
+
+	    	//console.log("selected: " + t.selected);
+		    if (this.up && t.selected === this.max || !this.up && t.selected === 0)
+		      this.up = !this.up;
+		      
+		    if (this.up) 
+		      t.selected += 1;
+		      
+		    else 
+		      t.selected -= 1;
+	      	console.log("t.selected: " + t.selected);
+	      	console.log(d.answer);
+	  	},
+	  	ready: function(){
+	  		console.log("ready");
+	  	},
+	  	toggleBg: function(e,d,t){
+	  		console.log("tapped");
+	  		console.log(e,d,t);
+	  		this.style.background = 'url("imgs/bg2.png")';
+	  	}
+
+	  });
+	 
+  	</script>
+</polymer-element>

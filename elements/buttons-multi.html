@@ -1,0 +1,109 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<polymer-element name="buttons-multi" attributes="content answer">
+	<template>
+		<style>
+			.question-box{
+				font-size: 1em;
+    			word-wrap: break-word;
+			}
+			
+			.image-box{
+				margin: 5% 0px 0px 0px;
+				padding: 5px;
+				border: 1px solid white;
+				background: rgba(255,255,255,0.2);
+
+			}
+			.image-box .image{
+				width:100%; height:200px; 
+			}
+
+			.option-box{
+				margin:  20px 0px 0px 0px;
+			}
+			.option-box .option{
+				width: 100%;
+				border: 1px solid rgba(255,255,255,0.2);
+				border-radius: 1px;
+				margin-bottom: 5px;
+				font-size: 0.7em;
+			}
+			.option-box .option:hover{
+				background: rgba(255,255,255,0.1);
+			}
+			.option-box .option.core-selected{
+				background: rgba(255,255,255,0.5);
+			}
+		/*	.option-box .option.toggle {
+				background-color: rgba(255,255,255,0.5);
+			}*/
+
+			/*paper-button {
+    			background: white;
+    			color: green;
+    			width: 500px;
+    			height: 100px;
+    			font-size: 30px;
+    			text-align: center;
+			}
+			.fixed {
+				position: fixed;
+				bottom: 0;
+				right: 0;
+			}
+			
+			paper-button.colored {
+      			color: red;
+    		}*/
+		</style>
+
+		<div layout vertical justified>
+			<!-- Question -->
+			<div layout horizontal class="question-box" wrap>
+				{{content.question.ques}} 
+			</div>
+
+			<!-- Image -->
+			<div layout horizontal center-justified class="image-box"  hidden?="{{!content.question.img}}">
+				<core-image class="image" sizing="cover"  fade src="{{content.question.img}}"></core-image>
+			</div>
+
+			<!-- Options -->
+			 <core-selector vertical layout center-justified center class="option-box" multi id="options-selector" valueattr="x-index" on-core-select="{{selectAction}}">
+		       <template repeat="{{x,index in content.options}}">
+					<paper-button class="option" toggle on-click="{{clicked}}" x-index="{{index}}" valueattr="{{x}}">{{x}}</paper-button>
+				</template>
+		     </core-selector>
+		 </div>	
+		<!-- <core-selection id="selection" multi on-core-select="{{selectAction}}"></core-selection> -->
+
+	</template>
+	<script>
+		Polymer( 'buttons-multi', {
+
+			selectAction: function(e, detail, sender) {
+				
+				this.temp = sender.selectedItem;
+				this.length=this.temp.length;
+				for(var i=0;i<this.length;i++)
+				{
+					this.answer[i]=this.temp[i].innerHTML;
+					console.log(this.answer[i]);
+				}
+ 				console.log('-----------------');
+
+       		},
+
+        	next: function(e,d,t) {
+				this.fire('done-event', {answer: this.answer});
+			},	
+       		answer: new Array(10),
+       		temp: new Array(10),
+       		length: 0
+		})
+	</script>
+</polymer-element>

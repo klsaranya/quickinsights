@@ -1,0 +1,259 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+
+
+<polymer-element name="star-rate" attributes="stars value readOnly answer content">
+
+    <template>
+      <style>
+          core-icon:hover {
+              cursor:pointer;
+              text-align: center;
+          }
+          core-icon {
+            width: 50px;
+            height: 50px
+          }
+          
+        .question-box{
+          font-size: 1em;
+          word-wrap: break-word;
+        }
+        
+        .image-box{
+          margin: 5% 0px 0px 0px;
+          padding: 5px;
+          border: 1px solid white;
+          background: rgba(255,255,255,0.2);
+
+        }
+        .image-box .image{
+          width:100%; height:200px; 
+        }
+
+        .option-box{
+          margin:  20px 0px 0px 0px;
+        }
+        /*.option-box .option{
+          width: 100%;
+          border: 1px solid rgba(255,255,255,0.2);
+          border-radius: 1px;
+          margin-bottom: 5px;
+          font-size: 0.7em;
+        }
+        .option-box .option:hover{
+          background: rgba(255,255,255,0.1);
+        }
+        .option-box .option.core-selected{
+          background: rgba(255,255,255,0.2);
+        }*/
+      </style>
+
+      <div layout vertical center-justified>
+      <!-- Question -->
+        <div layout horizontal class="question-box">
+          {{content.question.ques}} 
+        </div>
+
+        <!-- Image -->
+        <div layout horizontal center-justified class="image-box"  hidden?="{{!content.question.img}}">
+          <core-image class="image" sizing="cover"  fade src="{{content.question.img}}"></core-image>
+        </div>
+
+      <!-- Options -->
+       <div around-justified class="option-box" center>
+
+        <center><template repeat="{{n in currentStars}}">
+          <core-icon icon="{{n <= value ? 'favorite' : 'favorite-outline'}}"  hidden?="{{(n-value)==0.5}}" data-item="{{n}}" on-mouseout="{{onMouseout}}" on-click="{{setvalue}}">
+            <div flex style="width: 100%; height: 100%" layout horizontal>
+              <div flex on-mouseover="{{fullStar}}" style="width: 100%;height: 100%" data-item="{{n}}"></div>
+            </div>
+          </core-icon>
+
+          <core-icon icon="star-half" hidden?="{{value!=n-0.5}}" on-click="{{setvalue}}" data-item="{{n-0.5}}" on-mouseout="{{onMouseout}}">
+            <div flex style="width: 100%; height: 100%" layout horizontal>
+              <div flex on-mouseover="{{fullStar}}" style="width: 50%;height: 100%" data-item="{{n}}"></div>
+            </div>
+          </core-icon>
+        </template></center>
+
+      </div>
+
+     </div> 
+
+    </template>
+
+    <script>
+        Polymer('star-rate', {
+            default: this.value,
+            readOnly: false,
+            rated: false,
+            stars: 10,
+            value : 0,
+            answer: 0,
+            onHovered: function(e,d,t) {
+                // if (!this.readOnly && !this.rated){
+                    this.value = parseFloat(t.dataset.item, 10 );
+                // }
+            },
+            ready : function() {
+                this.currentStars = [];
+                for (var i = 0; i<= this.stars - 1; i++) {
+                    this.currentStars.push(i+1);
+                };
+                this.default = this.value;
+            },
+            setvalue: function(e,d,t) {
+                // if (!this.readOnly &&!this.rated) {
+                    this.value = parseFloat(t.dataset.item, 10 );
+                    this.rated=true;
+                    this.answer=this.value;
+                    console.log(this.answer);
+                // }
+            },
+            halfStar: function(e,d,t) {
+                if (!this.readOnly &&!this.rated) {
+                    this.value = parseFloat(t.dataset.item,10);
+                }
+            },
+            fullStar: function(e,d,t) {
+                if (!this.readOnly &&!this.rated) {
+                    this.value = parseFloat(t.dataset.item,10);
+                }
+            },
+            onMouseout: function(e,d,t) {
+                if (!this.readOnly &&!this.rated) {
+                    this.value=this.default;
+                }
+            },
+            next: function(e,d,t) {
+              this.fire('done-event', {answer: this.answer});
+            }
+            //console.log(value);
+          //this.fire('done-event', {answer: this.value});
+        });
+      
+    </script>
+</polymer-element>
+
+
+
+
+<!-- <polymer-element name="star-rating" attributes="stars rate">
+
+<template>
+
+  <style type="text/css">
+  		:host {
+  display: block;
+}
+
+.star-rating-wrapper {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+}
+.star-rating-wrapper > span {
+  display: inline-block;
+  position: relative;
+  width: 1em;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.star-rating-wrapper > span.normal{
+	  background: url(http://pngimg.com/upload/star_PNG1592.png);
+	    background-size: 30px 30px;
+   background-repeat: no-repeat;
+   content: "";
+   width: 30px;
+   height:30px;
+   
+}
+.star-rating-wrapper > span:hover:before,
+.star-rating-wrapper > span:hover ~ span:before,
+.star-rating-wrapper > span.active:before,
+.star-rating-wrapper > span.active ~ span:before {
+   background: url(http://pngimg.com/upload/star_PNG1592.png);
+   background-size: 30px 30px;
+   background-repeat: no-repeat;
+   content: "";
+   width: 30px;
+   height:30px;
+
+}
+
+  </style>
+
+  <div class="star-rating-wrapper">
+    <template repeat="{{n in currentStars}}">
+      <span class="{{n == rate ? 'active' : 'normal'}}" on-click="{{setRate}}" data-item="{{n}}"></span>
+    </template>
+  </div>
+
+</template>
+
+<script>
+  Polymer('star-rating', {
+       stars: 5,
+       rate : 0,
+       ready : function() {
+        this.currentStars = [];
+        
+        for (var i = this.stars - 1; i >= 0; i-) {
+          this.currentStars.push(i+1);
+        };
+      },
+
+      setRate: function(e,d,t) {
+        this.rate = parseInt(t.dataset.item, 10 );
+      }
+    });
+</script>
+</polymer-element> -->
+
+
+
+
+
+<!-- <polymer-element name="icon-scaling">
+	<template>
+		<style type="text/css">
+			.star{
+				cursor: pointer;
+			}
+		</style>
+		<div horizontal layout center center-justified>
+			<template repeat="{{ i,index in starArr}}">
+	  			<template bind if="{{ i == 0 }}">
+			  		<core-icon class="star" icon="favorite-outline" x-index="{{index}}" on-mouseover="{{changeIcon}}"></core-icon-button>	
+				</template>
+				
+				<template bind if="{{ i == 1 }}">
+					<core-icon class="star" icon="favorite" x-index="{{index}}" on-mouseover="{{changeIcon}}"></core-icon-button>	
+				</template>
+			</template>
+		</div>
+		
+
+	</template>
+	<script>
+		Polymer('icon-scaling', {
+			changeIcon: function(a,b,c) {
+				var x = c.attributes['x-index'].value;
+				this.starArr = Array.apply(null, new Array(this.stars)).map(Number.prototype.valueOf,0);
+				for(var i = 0 ; i<=x ;i++){
+					this.starArr[i]=1;
+				}
+			},
+			domReady: function(){
+				this.starArr = Array.apply(null, new Array(this.stars)).map(Number.prototype.valueOf,0);
+			},
+			stars: 8,
+			starArr: []	
+		})
+	</script>
+
+</polymer-element> -->

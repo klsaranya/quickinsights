@@ -1,0 +1,28 @@
+{
+  "name": "sortable-list",
+  "version": "0.1.0",
+  "keywords": [
+    "seed",
+    "polymer",
+    "web-components",
+    "sortable"
+  ],
+  "main": "sortable-list.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.1",
+    "Sortable": "~1.0.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#^2.0.0"
+  },
+  "homepage": "https://github.com/divshot/sortable-list",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "85a5fded8e609ee5eedd545f5631256a827aab4f"
+  },
+  "_source": "git://github.com/divshot/sortable-list.git",
+  "_target": "~0.1.0",
+  "_originalSource": "sortable-list"
+}

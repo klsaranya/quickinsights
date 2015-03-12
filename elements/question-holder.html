@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<link rel = "import" href="buttons-multi.html">
+<link rel = "import" href="image-multi.html">
+
+<polymer-element name="question-holder">
+	<template>
+		<style>
+		</style>
+
+		<image-multi content="{{data[0]}}"></image-multi> 
+		<!-- <yes-no content="{{data.x2}}" on-done-event="{{transition}}"> </yes-no>
+ -->
+
+	</template>
+	<script>
+		Polymer( 'question-holder', {
+			data: 
+			[{	
+				 question: ["Which subject do you like?",""], 
+				 options: ["http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 				"http://math-songs.com/wp-content/uploads/2011/06/geometry.jpg",
+			 				"http://cd8ba0b44a15c10065fd-24461f391e20b7336331d5789078af53.r23.cf1.rackcdn.com/learnenglish.vanillaforums.com/VF9UBSGE86BA.jpg",
+			 				"http://www.loisdalphinis.co.uk/wp-content/uploads/2013/11/grammar-test.jpg"]
+			},
+			{
+				 question: ["Do you find the app useful?",""],
+					 options:["yes","no"]
+			}]
+			
+		})
+	</script>
+</polymer-element>

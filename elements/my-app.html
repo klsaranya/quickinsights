@@ -1,0 +1,44 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel = "import" href="say-hello.html">
+
+<polymer-element name="my-app" on-said-hello="{{third}}">
+  <template>
+    <div on-said-hello="{{second}}">
+      <say-hello name="Mark" on-said-hello="{{first}}"></say-hello>
+    </div>
+  </template>
+  <script>
+    (function() {
+      function logger(prefix, detail, sender) {
+        alert(prefix + ' Said hi to ' + detail.name +
+              ' from ' + sender.localName);
+      }
+
+      Polymer('my-app', {
+        first: function(e, detail, sender) {
+          logger('first():', detail, sender);
+          console.log(detail);
+          console.log(sender);
+        },
+        second: function(e, detail, sender) {
+          logger('second():', detail, sender);
+          console.log(detail);
+          console.log(sender);
+        },
+        third: function(e, detail, sender) {
+          logger('third():', detail, sender);
+          console.log(detail);
+          console.log(sender);
+        }
+        // func: function(e, detail, sender) {
+        //   console.log(e,detail,sender);
+        // }
+      });
+    })();
+  </script>
+</polymer-element>
+
+
+

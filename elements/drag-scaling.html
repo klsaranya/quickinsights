@@ -1,0 +1,101 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<polymer-element name="drag-scaling" attributes="content answer">
+	<template>
+		<style>
+			paper-slider::shadow #sliderBar::shadow #activeProgress {
+  				background-color: rgba(255,255,255,0);
+  				border-top-left-radius: 8px;
+  				border-bottom-left-radius: 8px;
+			}
+
+			paper-slider::shadow #sliderBar::shadow #progressContainer {
+				border-radius: 8px;
+			}
+			paper-slider::shadow #sliderKnobInner {
+  				background-color: #0f9d58;
+			}
+			paper-slider::shadow #sliderKnob > #sliderKnobInner::after {
+  				color: #0f9d58;
+			}
+			.question-box{
+				font-size: 1em;
+    			word-wrap: break-word;
+			}
+			
+			.image-box{
+				margin: 5% 0px 0px 0px;
+				padding: 5px;
+				border: 1px solid white;
+				background: rgba(255,255,255,0.2);
+
+			}
+			.image-box .image{
+				width:100%; height:200px; 
+			}
+
+			.option-box{
+				margin: 5% 0px 0px 0px;
+				width: 100%;
+
+			}
+
+			.bar-container {
+				width: inherit;
+			}
+			
+			.option-box .slider {
+				width: 100%;
+				padding: 0px 0px 5% 0px;
+				height: 0.25em;
+				box-sizing: border-box;
+			}
+			.option-box paper-progress#sliderBar #progressContainer{
+
+				height: 1.5em;
+				border: 1px solid #b3b3b3;
+				border-radius: 8px;
+			}
+		</style>
+
+		<div layout vertical justified>
+			<!-- Question -->
+			<div layout horizontal class="question-box">
+				{{content.question.ques}} 
+			</div>
+
+			<!-- Image -->
+			<div layout horizontal center-justified class="image-box"  hidden?="{{!content.question.img}}">
+				<core-image class="image" sizing="cover" fade src="{{content.question.img}}"></core-image>
+			</div>
+
+			<!-- Options -->
+			<div horizontal layout center-justified center class="option-box">
+				<paper-slider center class="slider" min="10" max="200" value="110" on-change="{{changed}}" style="width: 100%; height: 25%; font-size: 100px"></paper-slider>
+			</div>
+
+		 </div>
+
+	</template>
+	<script>
+		Polymer('drag-scaling', {
+
+			changed: function(e,d,t) {
+				
+				this.answer=t.immediateValue;
+				console.log(this.answer);
+
+			},
+			next: function(e,d,t) {
+				this.fire('done-event', {answer: this.answer});
+			},
+			answer: 0
+		}
+			)
+	</script>
+
+</polymer-element>
+

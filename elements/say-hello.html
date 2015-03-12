@@ -1,0 +1,16 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+<polymer-element name="say-hello" attributes="name">
+  <template>Hello {{name}}!</template>
+  <script>
+    Polymer('say-hello', {
+    	ready: function() {
+    		this.addEventListener('click', this.sayHi);
+    	},
+      	sayHi: function() {
+  			this.fire('said-hello', {name: this.name});
+		}
+    });
+  </script>
+</polymer-element>

@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<polymer-element name="check-box" noscript>
+	<template>
+		<style>
+			paper-checkbox::shadow #ink[checked] {
+ 				color: #4285f4;
+			}
+			paper-checkbox::shadow #checkbox.checked {
+  				background-color: #4285f4;
+  				border-color: #4285f4;
+			}
+			paper-checkbox::shadow #ink {
+  				color: #b5b5b5;
+			}
+			
+		</style>
+		<div horizontal layout center>
+			<paper-checkbox></paper-checkbox>
+			 <div style="width: 100px" horizontal around-justified layout> <p> <b>checkbox1 </b></p> </div> 
+		</div>
+		<div horizontal layout center>
+			<paper-checkbox></paper-checkbox>
+			 <div style="width: 100px" horizontal around-justified layout> <p> <b>checkbox2 </b></p> </div> 
+		</div>
+		<div horizontal layout center>
+			<paper-checkbox></paper-checkbox>
+			 <div style="width: 100px" horizontal around-justified layout> <p> <b>checkbox3 </b></p> </div> 
+		</div>
+	</template>
+</polymer-element>

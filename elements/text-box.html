@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+
+
+
+<polymer-element name="text-box">
+	<template>
+		<style>
+			textarea {
+				width:500px;
+				height:50px;
+				vertical-align: center;
+			}
+		</style>
+		
+		<div vertical layout center-justified>
+			<center><h1> {{content.question[0]}} </h1></center>
+			<center><core-image sizing="contain" src="{{content.question[1]}}" style="width:200px; height:200px; background-color: #333;"></core-image></center>
+		</div>
+		<textarea id="t1" placeholder="Feedback"></textarea>
+		<!-- <paper-char-counter class="footer" target="t1" showCounter=true></paper-char-counter> -->
+		
+	</template>
+	<script>
+		Polymer('text-box', {
+
+		});
+	</script>
+</polymer>

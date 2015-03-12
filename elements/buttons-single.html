@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-elements/core-elements.html">
+
+<polymer-element name="buttons-single" attributes="content response">
+	<template>
+		<style>
+
+			.question-box{
+				
+				font-size: 1em;
+    			word-wrap: break-word;
+			}
+			
+			.image-box{
+				margin: 5% 0px 0px 0px;
+				padding: 5px;
+				border: 1px solid white;
+				background: rgba(255,255,255,0.2);
+
+			}
+			.image-box .image{
+				width:100%; height:200px; 
+			}
+
+			.option-box{
+				margin:  20px 0px 0px 0px;
+			}
+			.option-box .option{
+				width: 100%;
+				border: 1px solid rgba(255,255,255,0.2);
+				border-radius: 1px;
+				margin-bottom: 5px;
+				font-size: 0.7em;
+			}
+			.option-box .option:hover{
+				background: rgba(255,255,255,0.1);
+			}
+			.option-box .option.core-selected{
+				background: rgba(255,255,255,0.2);
+			}
+
+		</style>
+		<div layout vertical justified>
+			<!-- Question -->
+			<div layout horizontal class="question-box">
+				{{content.question.ques}} 
+			</div>
+
+			<!-- Image -->
+			<div layout horizontal center-justified class="image-box"  hidden?="{{!content.question.img}}">
+				<core-image class="image" sizing="cover"  fade src="{{content.question.img}}"></core-image>
+			</div>
+
+			<!-- Options -->
+			 <core-selector vertical layout center-justified center class="option-box"  id="options-selector">
+		       <template repeat="{{x,index in content.options}}">
+					<paper-button class="option" on-click="{{clicked}}" x-index="{{index}}">{{x}}</paper-button>
+				</template>
+		     </core-selector>
+		 </div>	
+
+	</template>
+	<script>
+		Polymer( 'buttons-single', {
+
+			clicked: function(e,d,t) {
+				this.response.text = t.innerHTML;
+				this.response.index = t.attributes['x-index'].value;
+				this.fire('enable-next');
+			},
+			response: { text: "", index:0 }
+
+		})
+	</script>
+</polymer-element>
