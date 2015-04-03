@@ -71,154 +71,121 @@
 			core-animated-pages {
 				height: 100%;
 			}
+			#image {
+				height: 450px;
+			}
 		</style>
-
-<!-- 			<core-header-panel fit>
-
-			  <core-toolbar>Quick Insights</core-toolbar> 
-				
-
-			  <div class="theme-box">
-			  
-			  <div layout horizontal center-justified center fit>
-			  		<div class="container" vertical layout center center-justified>
-						<paper-shadow z="1" class="quescard">
-							<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
-						</paper-shadow>
-
-						<control-box></control-box>	
-					</div>
-			  </div>
-
-			</core-header-panel> -->
-	
-		   <!-- <buttons-multi layout vertical content="{{data[2]}}"> </buttons-multi>
-		   <buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
-		   <drag-scaling layout vertical content="{{data[2]}}"> </drag-scaling>
-		   <star-rate layout vertical content="{{data[2]}}"> </star-rate>
-		   <yes-no layout vertical content="{{data[2]}}"> </yes-no>
-		   <yes-noother layout vertical content="{{data[2]}}"> </yes-noother>
-		   <number-scaling layout vertical content="{{data[2]}}"> </number-scaling> -->
 		
 	<core-toolbar>
 		<div vertical layout center around-justified>Quick Insights</div>
 	</core-toolbar> 
-	  <core-animated-pages id="ani" on-clicked-next="{{stuff}}" transitions="slide-from-right">
+	  <core-animated-pages id="ani" on-clicked-next="{{next}}" on-clicked-back="{{back}}" transitions="slide-from-right">
+		<template repeat="{{data2, i in data}}">
+			<section layout vertical center class="theme-box">
 
-	  	<section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
-				</paper-shadow>
+				<template if="{{data2.ques_type == 'yes-no' }}">
+				    <div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<yes-no layout vertical content="{{data2}}"> </yes-no>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
-	     
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<buttons-multi layout vertical content="{{data[0]}}"> </buttons-multi>
-				</paper-shadow>
+			    <template if="{{data2.ques_type == 'drag-scaling' }}">
+				    <div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<drag-scaling layout vertical content="{{data2}}"> </drag-scaling>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<drag-scaling content="{{data[4]}}"></drag-scaling>
-				</paper-shadow>
+				<template if="{{ data2.ques_type == 'buttons-multi' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<buttons-multi layout vertical content="{{data2}}"> </buttons-multi>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<yes-no layout vertical content="{{data[1]}}"> </yes-no>
-				</paper-shadow>
+			    <template if="{{ data2.ques_type == 'star-rate' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<star-rate layout vertical content="{{data2}}"> </star-rate>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-	    
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<star-rate content="{{data[3]}}"></star-rate>
-				</paper-shadow>
+			    <template if="{{ data2.ques_type == 'buttons-single' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<buttons-single layout vertical content="{{data2}}"> </buttons-single>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-	    	
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<number-scaling content="{{data[3]}}"></number-scaling>
-				</paper-shadow>
+			    <template if="{{ data2.ques_type == 'image-grid' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<image-grid layout vertical content="{{data2}}" id="image"> </image-grid>
+						</paper-shadow>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
+			    <template if="{{ data2.ques_type == 'image-multi' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<image-multi layout vertical content="{{data2}}" id="image"> </image-multi>
+						</paper-shadow>
 
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<image-grid content="{{data[5]}}"></image-grid>
-				</paper-shadow>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
 
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
+			    <template if="{{ data2.ques_type == 'number-scaling' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<number-scaling layout vertical content="{{data2}}"> </number-scaling>
+						</paper-shadow>
 
-
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<yes-noother content="{{data[1]}}"></yes-noother>
-				</paper-shadow>
-
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
-	
-	    <section layout vertical center class="theme-box">
-	    	<div class="container" vertical layout center center-justified>
-				<paper-shadow z="1" class="quescard">
-					<image-multi content="{{data[5]}}"></image-multi>
-				</paper-shadow>
-
-				<some-toolbar></some-toolbar>	
-			</div>
-	    </section>
-
-	  </core-animated-pages>
-	  
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+			</section>
+		</template>
+	</core-animated-pages>
+	   
 	</template>
 
   	<script>
 	  Polymer('qi-app', {
 	  	backgrounds: ["imgs/bg2.png","imgs/bg1.jpg"],
 	  	up: true,
-	    max: 8,
+	    max: 7,
 	   
 	    data: 
 			[{	
+				ques_type: "buttons-multi",
 				question: {
+
 					ques: "With which account do you prefer to login? With which account do you prefer to login? With which account do you prefer to login?",
 					img:  ""
 				}, 
 				options: ["facebook","google","twitter","other"]
 			},
 			{
+				ques_type: "yes-no",
 				question: {
 					ques: "Do you find the app useful?",
 					img: "http://rocketpost.com/media/open-uri20111206-24308-1i0xk9x-0-large..png"
@@ -226,25 +193,66 @@
 					 options:["yes", "no"]
 			},
 			{
-				question: { 
-					ques: "How satisfied asdfasdfsadfasfasfasdfasfd asdf a sdf as df as fa sf asdfasdfs are you with this purchase?",
+				ques_type: "buttons-single",
+				question: {
+					ques: "How satisfied are you with this purchase?",
 					img: "http://www.morningdressguide.com/wp-content/uploads/2012/08/vintage-hunter-pocket-watch.jpg"
 				},
 				options: ["Extremely satisfied","Very satisfied","Neutral","Somewhat satisfied","Not at all satisfied"]
 			},
+			{	
+				ques_type: "image-multi",
+				 question: {
+				 	ques: "Which subject do you like?",
+				 	img: ""
+				 }, 
+				 options: [
+				 	
+				 			{ 
+				 				src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+				 				label: "image1" 
+				 			},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image2"
+			 				},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image3"
+			 				},
+			 				{ 
+			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
+			 					label: "image4"
+			 				}
+			 		
+			 		
+			 	]
+			 			  
+			},
 			{
+				ques_type: "star-rate",
 				question:{
 					ques: "How do you rate the teaching capability of the app?",
 					img: ""
 				}
 			},
 			{
+				ques_type: "number-scaling",
+				question:{
+					ques: "How do you rate the teaching capability of the app?",
+					img: ""
+				}
+			},
+			{
+				ques_type: "drag-scaling",
 				question: {
 					ques: "When contacted our support representative, how would you rate them on their knowledge and ability to handle your issue?",
 					img: ""
 				}
 			},
+			
 			{	
+				ques_type: "image-grid",
 				 question: {
 				 	ques: "Which subject do you like?",
 				 	img: ""
@@ -272,27 +280,28 @@
 			 	]
 			 			  
 			}],
-	  	stuff: function(e,d,t) {
+	  	next: function(e,d,t) {
 
-	    	//console.log("selected: " + t.selected);
-		    if (this.up && t.selected === this.max || !this.up && t.selected === 0)
-		      this.up = !this.up;
-		      
-		    if (this.up) 
-		      t.selected += 1;
+	  		up=true;
+		    if (t.selected === this.max) 
+		      t.selected -= 1;
 		      
 		    else 
-		      t.selected -= 1;
+		      t.selected += 1;
 	      	
 	  	},
 	  	ready: function(){
 	  		console.log("ready");
 	  	},
-	  	toggleBg: function(e,d,t){
-	  		console.log("tapped");
-	  		console.log(e,d,t);
-	  	// 	this.style.background = 'url("imgs/bg2.png")';
-	  	 }
+	  	back: function(e,d,t) {
+
+	  		up=false;
+
+	  		if(t.selected === 0)
+	  			t.selected += 1;
+	  		else
+	  			t.selected -= 1;
+	  	}
 
 	  });
 	 

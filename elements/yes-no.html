@@ -83,9 +83,6 @@
 			clicked: function(e,d,t) {
 				this.answer = t.attributes['name'].value;
 				console.log(this.answer);
-			},
-			next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
 			}
 
 		})

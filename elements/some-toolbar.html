@@ -1,0 +1,68 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="some-toolbar" attributes="totalscreens">
+	<template>
+			<style>
+			:host{
+				background: rgba(0,0,0,0.4);
+				color: white;
+				width: 100%;
+				box-sizing: border-box;
+				margin-bottom: 40px;
+			}
+			.container{
+				padding: 0px 40px 0px 40px;
+			}
+			.progbar{
+				width: 100%;
+			}
+			.btn{
+				margin:0px;	
+			}
+			paper-button[disabled] {
+  			  background: none;
+  			}	
+			</style>
+
+			<paper-shadow z="1" class="container" >
+				<paper-progress value="{{value}}" max="{{totalscreens}}" class="progbar"></paper-progress><br>
+			
+				<div layout horizontal justified>
+					<!-- Back -->
+					<paper-button class="btn" layout vertical center-justified on-click="{{back}}">
+					  <core-icon icon="arrow-back"></core-icon>Back
+					</paper-button>
+
+					<!-- Next -->
+					<paper-button class="btn" layout vertical center-justified on-click="{{next}}">
+					  Next<core-icon icon="arrow-forward"></core-icon>
+					</paper-button>
+
+				</div>
+			</paper-shadow>
+
+	</template>
+	<script>
+		Polymer('some-toolbar', {
+			ready: function(){	
+				value = 0;
+		  	},
+			next: function(e,d,t) {
+
+				this.fire('clicked-next');
+				console.log("clicked-next");
+				console.log(value);
+				value=value+1;
+				console.log(value);
+			},
+			back: function(e,d,t) {
+				this.fire('clicked-back');
+				console.log("clicked-back");
+				console.log(value);
+				value=value-1;
+				console.log(value);
+			},
+			
+		});
+	</script>
+</polymer-element>

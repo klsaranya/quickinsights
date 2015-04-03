@@ -40,8 +40,7 @@
 				background: rgba(255,255,255,0.1);
 			}
 			.option-box .option.core-selected{
-				background: rgba(255,255,255,0.2);
-				/*background-color: rgba(255,0,0,1);*/
+				background: rgba(255,255,255,0.5);
 			}
 			.button-content {
 				width: 5%;
@@ -63,11 +62,11 @@
 			</div>
 
 			<!-- Options -->
-			 <div horizontal layout center-justified center class="option-box">
+			<core-selector horizontal layout center-justified center class="option-box"  id="options-selector">
 				<template repeat="{{num, index in numArr}}">
 					<paper-button class="option" on-click="{{clicked}}">{{num}}</paper-button>
 				</template>
-			</div>
+			</core-selector>
 
 		 </div>	
 		
@@ -79,9 +78,6 @@
 				
 				this.answer = t.innerHTML;
 				console.log(this.answer);
-			},
-			next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
 			},
 			numArr: [1,2,3,4,5,6,7,8,9,10],
 			answer: 0
