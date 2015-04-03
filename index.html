@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="bower_components/ElementTransitions/css/elementTransitions.css"/>
+	 <script src="bower_components/ElementTransitions/js/elementTransitions.js"></script>
+	 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	
  	<meta name="viewport" content="width=device-width, initial-scale=1">
  	<script src = "bower_components/webcomponentsjs/webcomponents.min.js"></script>
  	<link rel="import" href="bower_components/paper-elements/paper-elements.html">
@@ -8,13 +13,30 @@
  	<link rel="import" href="bower_components/font-roboto/roboto.html">
  	<link rel ="import" href="qi-app.html">
  	<style>
-		main { 	
-			width: 100%;
+		.et-page { 	
+				width: 100%;
+				height: 700px;
+				margin: 0px;
+		}
+		body {
+			height: 600px;
+		}
+		.et-wrapper{
 			height: 100%;
-			margin: 0px;
 		}
  	</style>
  </head>
+ <!-- <body>
+ 	<div class="et-wrapper">
+	  <div class="et-page">
+	   <h2>Page 1</h2>
+	   <button class="et-rotate" et-in="rotateCarouselRightIn" et-out="rotateCarouselRightOut">Next</button>
+	 </div>
+	 <div class="et-page">
+	   <h2>Page 2</h2>
+	   <button class="et-rotate" et-in="rotateCarouselLeftIn" et-out="rotateCarouselLeftOut">Back</button>
+	 </div>
+	</div> -->
  <body fullbleed layout vertical center>  
   <main flex center>
   		<qi-app fit></qi-app>

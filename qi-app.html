@@ -1,7 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../bower_components/ElementTransitions/css/elementTransitions.css"/>
+<script src="../bower_components/ElementTransitions/js/elementTransitions.js"></script>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
 <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
 <link rel="import" href="../bower_components/core-elements/core-elements.html">
+
 
 <link rel = "import" href="../elements/drag-scaling.html">
 <link rel = "import" href="../elements/buttons-multi.html">
@@ -12,8 +18,9 @@
 <link rel = "import" href="../elements/image-grid.html">
 <link rel = "import" href="../elements/yes-noother.html">
 <link rel = "import" href="../elements/image-multi.html">
+<link rel = "import" href="../elements/some-toolbar.html">
 
-<link rel = "import" href="../elements/control-box.html">
+
 
 <polymer-element name="qi-app">
 	<template>
@@ -23,6 +30,11 @@
 				font-family: 'roboto';
 				font-weight: 300;
 				
+			}
+			.et-page { 	
+				width: 100%;
+				height: 700px;
+				margin: 0px;
 			}
 			.quescard{
 				background: rgba(0,0,0,0.4);
@@ -53,33 +65,33 @@
 				width: 100%;
 				height: 100%;
 			}
+			.card {
+				width: 
+			}
+			core-animated-pages {
+				height: 100%;
+			}
 		</style>
 
-		   <core-header-panel fit>
+<!-- 			<core-header-panel fit>
 
-			  <!-- <core-toolbar>Quick Insights</core-toolbar> -->
+			  <core-toolbar>Quick Insights</core-toolbar> 
 				
 
 			  <div class="theme-box">
-			  	<core-icon-button icon="swap-horiz" on-tap="{{toggleBg}}" ></core-icon-button>
-			  </div>
 			  
 			  <div layout horizontal center-justified center fit>
 			  		<div class="container" vertical layout center center-justified>
 						<paper-shadow z="1" class="quescard">
-							<!-- <image-multi content="{{data[5]}}"></image-multi>		 -->
-								      	<buttons-multi content="{{data[0]}}"> </buttons-multi>
-
+							<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
 						</paper-shadow>
 
-						<control-box></control-box>
-						
+						<control-box></control-box>	
 					</div>
 			  </div>
-		   	  
 
-		   </core-header-panel>
-					
+			</core-header-panel> -->
+	
 		   <!-- <buttons-multi layout vertical content="{{data[2]}}"> </buttons-multi>
 		   <buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
 		   <drag-scaling layout vertical content="{{data[2]}}"> </drag-scaling>
@@ -87,49 +99,108 @@
 		   <yes-no layout vertical content="{{data[2]}}"> </yes-no>
 		   <yes-noother layout vertical content="{{data[2]}}"> </yes-noother>
 		   <number-scaling layout vertical content="{{data[2]}}"> </number-scaling> -->
+		
+	<core-toolbar>
+		<div vertical layout center around-justified>Quick Insights</div>
+	</core-toolbar> 
+	  <core-animated-pages id="ani" on-clicked-next="{{stuff}}" transitions="slide-from-right">
 
-	 <!--    <paper-card layout vertical>
-				 	<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
-			    </paper-card> -->
+	  	<section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
+				</paper-shadow>
 
-	  <!-- <core-animated-pages id="ani" on-done-event="{{stuff}}" transitions="slide-from-right">
-	    <section layout vertical >
-	     	<buttons-single layout vertical content="{{data[2]}}"> </buttons-single>
+				<some-toolbar></some-toolbar>	
+			</div>
+	    </section>
+	     
+
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<buttons-multi layout vertical content="{{data[0]}}"> </buttons-multi>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	      	<buttons-multi content="{{data[0]}}"> </buttons-multi>
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<drag-scaling content="{{data[4]}}"></drag-scaling>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	      <drag-scaling content="{{data[4]}}"></drag-scaling>
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<yes-no layout vertical content="{{data[1]}}"> </yes-no>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	       <yes-no content="{{data[1]}}"></yes-no>
+	    
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<star-rate content="{{data[3]}}"></star-rate>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	    	<star-rate content="{{data[3]}}"></star-rate>
+	    	
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<number-scaling content="{{data[3]}}"></number-scaling>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	    	<number-scaling content="{{data[3]}}"></number-scaling>
+
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<image-grid content="{{data[5]}}"></image-grid>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	    	<image-grid content="{{data[5]}}"></image-grid>
+
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<yes-noother content="{{data[1]}}"></yes-noother>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
+	    </section>
+	
+	    <section layout vertical center class="theme-box">
+	    	<div class="container" vertical layout center center-justified>
+				<paper-shadow z="1" class="quescard">
+					<image-multi content="{{data[5]}}"></image-multi>
+				</paper-shadow>
+
+				<some-toolbar></some-toolbar>	
+			</div>
 	    </section>
 
-	    <section>
-	    	<yes-noother content="{{data[1]}}"></yes-noother>
-	    </section>
-
-	    <section>
-	    	<image-multi content="{{data[5]}}"></image-multi>
-	    </section>
-
-	  </core-animated-pages> -->
+	  </core-animated-pages>
 	  
 	</template>
 
@@ -212,8 +283,7 @@
 		      
 		    else 
 		      t.selected -= 1;
-	      	console.log("t.selected: " + t.selected);
-	      	console.log(d.answer);
+	      	
 	  	},
 	  	ready: function(){
 	  		console.log("ready");
@@ -221,8 +291,8 @@
 	  	toggleBg: function(e,d,t){
 	  		console.log("tapped");
 	  		console.log(e,d,t);
-	  		this.style.background = 'url("imgs/bg2.png")';
-	  	}
+	  	// 	this.style.background = 'url("imgs/bg2.png")';
+	  	 }
 
 	  });
 	 

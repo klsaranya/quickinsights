@@ -68,7 +68,7 @@
 					<template repeat="{{x,index in content.options}}">
 						<paper-button class="option" center-justified  x-index="{{index}}" on-click="{{clicked}}">
 							<div vertical layout>
-								<img src="{{x}}" style="width:100%;height: auto;">
+								<img src="{{x.src}}" style="width:100%;height: auto;">
 								<div class="image-label">Image</div>
 							</div>
 							<!-- <core-image preload sizing="cover" src="{{x}}"></core-image> -->
