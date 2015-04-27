@@ -1,0 +1,139 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel ="import" href="../elements/home-page.html">
+
+<polymer-element name="user-page">
+	<template>
+		<style>
+		.whole {
+			width: 100%;
+			height: 300px;
+			max-height: 500px;
+			box-sizing: border-box;
+			margin-top: 60px;
+
+		}
+		.submit::shadow #ripple {
+		  color: green;
+		}
+		.login{
+			/*max-width: 450px;*/
+			/*margin: 5px;*/
+			/*height: 100%;*/
+			/*width: inherit;*/
+			box-sizing: border-box;
+			border-right: 1px solid black;
+		}
+		#niche{
+			height: 10%;
+		}
+		#option1 {
+			
+			padding: 20px;
+			padding-left: 40px;
+		}
+		#submit {
+			max-height: 50px;
+			border:1px solid black inherit;
+		}
+		</style>
+		<div class="whole" center horizontal layout>
+			<div class="login" vertical layout center center-justified>
+				<div vertical layout>
+					<input is="core-input" placeholder="Username" on-input="{{name}}" id="option1" committedValue="{{committedValue1}}">
+					<input is="core-input" placeholder="Password" on-input="{{paswd}}" id="option1" committedValue="{{committedValue1}}">
+				</div>
+				<div horizontal layout flex id="niche">
+					<paper-button class="submit" raised on-click="{{login}}" recenteringTouch="true"> Login </paper-button>
+				</div>
+			</div>
+			<div class="signup" vertical layout center center-justified>
+				<div> New User?
+				</div>
+				<div vertical layout>
+					<input is="core-input" type="text" placeholder="Username" on-input="{{name}}" id="option1" committedValue="{{committedValue1}}">
+					<input is="core-input" type="password" placeholder="Password" on-input="{{paswd}}" id="option1" committedValue="{{committedValue1}}">
+					<input is="core-input" type="password" placeholder="Confirm Password" id="option1" committedValue="{{committedValue1}}">
+					<input is="core-input" placeholder="Email" on-input="{{ema}}" id="option1" committedValue="{{committedValue1}}">
+				</div>
+				<div horizontal layout flex id="niche">
+					<paper-button on-click="{{signup}}" raised class="submit"> Signup </paper-button>
+				</div>
+			</div>
+		</div>
+		
+	</template>
+	<script>
+	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+
+	Polymer('user-page', {
+		usrname: "",
+		pswd: "",
+		eml:"",
+		callhomepage: false,
+		name: function(e,d,t) {
+			this.usrname = t.value;
+			//console.log(this.usrname);
+		},
+		paswd: function(e,d,t) {
+			this.pswd = t.value;
+			//console.log(this.pswd);
+		},
+		ema: function(e,d,t) {
+			this.eml = t.value;
+			//console.log(this.eml);
+		},
+		s4: function() {
+	  		return Math.floor((1 + Math.random()) * 0x10000)
+			      .toString(16)
+			      .substring(1);
+	  	},
+	  	randomgen: function() {
+		  	return this.s4() + this.s4() + '-' + this.s4();
+	  	},
+	  	ready: function() {
+	  		// Parse.User.logOut();
+	  		var currentUser = Parse.User.current();
+			if (currentUser) {
+				console.log(currentUser.get("email"));
+			    // do stuff with the user
+			} else {
+				console.log("no currentUser");
+			    // show the signup or login page
+			}
+	  	},
+		signup: function() {
+			var str = this.randomgen();
+			var user = new Parse.User();
+			user.set("username", this.usrname);
+			user.set("password", this.pswd);
+			user.set("email", this.eml);
+			user.set("userId", str);
+			var that=this;
+			 
+			user.signUp(null, {
+			  success: function(user) {
+			    // Hooray! Let them use the app now.
+			    alert("New user signed up");
+			  },
+			  error: function(user, error) {
+			    // Show the error message somewhere and let the user try again.
+			    alert("Error: " + error.code + " " + error.message);
+			  }
+			});
+		},
+		login: function() {
+			Parse.User.logIn(this.usrname, this.pswd, {
+			  success: function(user) {
+			    // Do stuff after successful login.
+			    alert("Login successful");
+			    that.callhomepage = true;
+			  },
+			  error: function(user, error) {
+			    // The login failed. Check error to see why.
+			    alert("Error: " + error.code + " " + error.message);
+			  }
+			});
+		}
+	});
+	</script>
+</polymer-element>

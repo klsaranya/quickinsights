@@ -38,27 +38,6 @@
 			.option-box .option.core-selected{
 				background: rgba(255,255,255,0.5);
 			}
-		/*	.option-box .option.toggle {
-				background-color: rgba(255,255,255,0.5);
-			}*/
-
-			/*paper-button {
-    			background: white;
-    			color: green;
-    			width: 500px;
-    			height: 100px;
-    			font-size: 30px;
-    			text-align: center;
-			}
-			.fixed {
-				position: fixed;
-				bottom: 0;
-				right: 0;
-			}
-			
-			paper-button.colored {
-      			color: red;
-    		}*/
 		</style>
 
 		<div layout vertical justified>
@@ -79,7 +58,6 @@
 				</template>
 		     </core-selector>
 		 </div>	
-		<!-- <core-selection id="selection" multi on-core-select="{{selectAction}}"></core-selection> -->
 
 	</template>
 	<script>
@@ -88,20 +66,22 @@
 			selectAction: function(e, detail, sender) {
 				
 				this.temp = sender.selectedItem;
-				this.length=this.temp.length;
+				this.length = this.temp.length;
+				this.arr = [];
+				this.answer = "";
 				for(var i=0;i<this.length;i++)
 				{
-					this.answer[i]=this.temp[i].innerHTML;
-					console.log(this.answer[i]);
+					this.arr[i] = 1 + + sender.selectedItem[i].attributes['x-index'].value;
 				}
- 				console.log('-----------------');
-
+				for(var i=0;i<this.length;i++)
+				{
+					this.answer+=this.arr[i];
+				}
+				detail.item.classList.toggle('selected', detail.isSelected);
+				this.fire('done-event',  {answer: this.answer})
        		},
-
-        	next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
-			},	
-       		answer: new Array(10),
+       		arr: new Array(10),
+       		answer: "",
        		temp: new Array(10),
        		length: 0
 		})

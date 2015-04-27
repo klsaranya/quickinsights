@@ -1,0 +1,254 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel = "import" href="../elements/some-toolbar.html">
+<link rel = "import" href="graphs/sr-graph.html">
+<link rel = "import" href="graphs/bs-graph.html">
+<link rel = "import" href="graphs/yn-graph.html">
+<link rel = "import" href="graphs/ds-graph.html">
+<link rel = "import" href="graphs/bm-graph.html">
+<link rel = "import" href="graphs/ns-graph.html">
+<link rel = "import" href="graphs/im-graph.html">
+<link rel = "import" href="graphs/ig-graph.html">
+
+
+<polymer-element name="qi-graph" attributes="surveyid">
+	<template>
+		<style>
+			:host{
+				/*//background: url(imgs/bg1.jpg);*/
+				font-family: 'roboto';
+				font-weight: 300;
+				
+			}
+			
+			.quescard{
+				background: rgba(0,0,0,0.4);
+				color: white;
+				padding: 3%;
+				margin: 40px 0px 5px 0px;
+				width: 100%;
+				/*height: inherit;*/
+				box-sizing: border-box;
+
+			}
+			.theme-box{
+				position: absolute;
+				right: 0;
+				top: 0;
+				height:500px;
+				/*margin: 0px 0px 5px 5px;*/
+			}
+			
+			.container{
+				max-width: 350px;
+				margin: 5;
+				height: 100%;
+				width: 310px;
+				box-sizing: border-box;
+
+			}
+			.whole{
+				width: 100%;
+				height: 100%;
+			}
+			/*.card {
+				width: 
+			}*/
+			core-animated-pages {
+				height: inherit;
+				width: 100%;
+			}
+			#image {
+				height: 450px;
+			}
+		</style>
+		
+	<!-- 	<core-toolbar>
+		<div vertical layout center around-justified>Quick Insights</div>
+	</core-toolbar> -->
+
+	  <core-animated-pages id="ani" on-clicked-back="{{back}}" on-clicked-next="{{next}}" transitions="slide-from-right">
+		<template repeat="{{x, i in qtypes}}">
+			<section layout vertical center class="theme-box">
+
+				<template if="{{ x == 'image-multi' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<im-graph layout vertical ans="{{responses[i]}}" len="{{options[i].length}}"></im-graph>
+						</paper-shadow>
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+				<template if="{{x == 'yes-no' }}">
+				    <div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<yn-graph layout vertical ans="{{responses[i]}}" len="{{options[i].length}}"></yn-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{x == 'drag-scaling' }}">
+				    <div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<ds-graph layout vertical ans="{{responses[i]}}"></ds-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+				<template if="{{ x == 'buttons-multi' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<bm-graph layout vertical ans="{{responses[i]}}" len="{{options[i].length}}"></bm-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ x == 'star-rate' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<sr-graph layout vertical ans="{{responses[i]}}" len=10></sr-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ x == 'buttons-single' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<bs-graph layout vertical ans="{{responses[i]}}" len="{{options[i].length}}"></bs-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ x == 'image-grid' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<ig-graph layout vertical ans="{{responses[i]}}" len="{{options[i].length}}"></ig-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ x == 'number-scaling' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<ns-graph layout vertical ans="{{responses[i]}}" len=10></ns-graph>
+						</paper-shadow>
+
+						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ x == 'submit' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							The End
+						</paper-shadow>
+					</div>
+			    </template>
+
+			</section>
+		</template>
+	</core-animated-pages>
+
+	</template>
+	<script>
+
+	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+	Polymer('qi-graph', {
+      qtypes: [],
+      responses: [],
+      options:[],
+      // len:0,
+      ready: function(e,d,t) {
+      	console.log(this.surveyid);
+      	var Question = Parse.Object.extend("Question");
+        var query1 = new Parse.Query(Question);
+        var that = this;
+        query1.equalTo("surveyId",this.surveyid);
+        query1.first({
+        	success: function(obj) {
+        		console.log(obj);
+        		var temp = obj.get('data');
+        		that.len = temp.length;
+        		for(var j=0;j<temp.length;j++)
+        		{
+        			var te = temp[j]["ques_type"];	
+        			that.qtypes[j]=te;
+        			that.options[j]=temp[j]["options"];
+        		}
+        		console.log(that.qtypes);
+        		console.log(that.options);
+        	},
+        	error: function(error) {
+            	alert("Error " + error);
+          	}
+        }); 
+      },
+      qtypesChanged: function() {
+      	var Responses = Parse.Object.extend("Responses");
+        var query = new Parse.Query(Responses);
+        var that = this;
+        query.equalTo("surveyId",that.surveyid);
+        query.find({
+          success: function(obj) {
+          	for(var i=0;i<that.qtypes.length-1;i++)
+          	{
+          		var arr = [];
+
+          		for(var l=0;l<obj.length;l++)
+          		{	
+          			//console.log("enter");
+          			var t = obj[l].get("answer");
+          			console.log(obj[l].get("answer"));
+          			arr[l]=t[i];
+          		}
+          		that.responses[i] = _.cloneDeep(arr);
+          	}	
+          	console.log(that.responses);
+          },
+          error: function(error) {
+            alert("Error " + error);
+          }
+        }); 
+
+   
+      },
+      next: function(e,d,t) {
+	  		up=true;
+
+		    if (t.selected === this.max) 
+		      t.selected -= 1;
+		      
+		    else
+		    {
+		    	t.selected += 1;
+		    	console.log("t" + t.selected);
+		    }
+		      
+	      	
+	  	},
+	  	back: function(e,d,t) {
+
+	  		up=false;
+
+	  		if(t.selected === 0)
+	  			t.selected += 1;
+	  		else
+	  			t.selected -= 1;
+	  	}
+
+	});
+	</script>
+</polymer-element>

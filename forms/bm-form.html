@@ -1,0 +1,91 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+
+<polymer-element name="bm-form" attributes="formdata">
+	<template>
+		<style>
+		.form{
+			margin: 5% 0px 0px 0px;
+			padding: 5px;
+			border: 1px;
+			background: rgba(255,255,255,0.2);
+			width: 100%;
+			height: 100%;
+			display: block;
+			padding-top: 20px;
+		}
+		.big {
+		    height: 42px;
+		    width: 42px;
+  		}
+		#option1 {
+			padding: 10px;
+		}
+		.submit {
+			padding: 9px;
+			width: 25%;
+			text-align: center;
+			display: inline-block;
+			box-sizing: border-box;
+			margin-left: 30%; 
+		}
+		</style>
+
+		<h2>Question Details</h2>
+		<div vertical layout class="form">
+
+			<input is="core-input" placeholder="Your Question" on-input="{{question}}" id="option1" committedValue="{{committedValue1}}">
+			<input is="core-input" placeholder="Image url(optional)" on-input="{{quesimg}}" id="option1" committedValue="{{committedValue2}}">
+
+			<h4>Options </h4>
+			 <template repeat="{{x,index in data1.options}}">
+				<input is="core-input" placeholder="Your option" on-change="{{option}}" value="{{x}}" id="option1" x-index="{{index}}">
+			</template>
+
+			<paper-button class="btn" layout vertical on-click="{{add}}" style="width:25%;">
+				<core-icon icon="add-box"></core-icon>
+			</paper-button>
+
+			<button on-click="{{save}}" class="submit" center-justified> SAVE </button>
+
+		</div>
+
+	</template>
+
+	<script>
+	Polymer('bm-form', {
+		data1: {
+			ques_type: "buttons-multi",
+			question: {
+				ques: "",
+				img: ""
+			},
+			options: ["","","",""]
+		},
+		question: function(e,d,t) {
+			this.data1.question.ques = t.value;
+			
+		},
+		quesimg: function(e,d,t) {
+			this.data1.question.img = t.value;
+		
+		},
+		save: function(e,d,t) {
+
+			this.fire('form-done', {formdata: this.data1});
+		},
+		option: function(e,d,t) {	
+			var i = t.attributes['x-index'].value;
+			this.data1.options[i]=t.value;
+		},
+		add: function(e,d,t) {
+			var len = this.data1.options.length;
+			this.data1.options[len]="";
+		}
+		
+	});
+	</script>
+
+</polymer-element>

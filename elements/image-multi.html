@@ -81,23 +81,26 @@
 	<script>
 		Polymer( 'image-multi', {
 
-			selectAction: function(e, detail, sender) {
+			selectAction: function(e, d, t) {
 				
-				this.temp = sender.selectedItem;
+				this.temp = t.selectedItem;
 				this.length=this.temp.length;
-				console.log(this.length);
+				this.arr = [];
+				this.answer = "";
 				for(var i=0;i<this.length;i++)
 				{
-					this.answer[i]=this.temp[i].innerText;
-					console.log(this.answer[i]);
+					this.arr[i] = 1 + + this.temp[i].attributes['x-index'].value;
 				}
- 				console.log('-----------------');
-
+				for(var i=0;i<this.length;i++)
+				{
+					this.answer+=this.arr[i];
+				}
+				console.log('answer : ' + this.answer);
+				//detail.item.classList.toggle('selected', detail.isSelected);
+				this.fire('done-event',  {answer: this.answer});	
        		},
-        	next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
-			},	
-       		answer: new Array(10),
+       		arr: new Array(10),
+       		answer: "",
        		temp: new Array(10),
        		length: 0
 		})

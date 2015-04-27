@@ -1,0 +1,250 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="forms/bs-form.html">
+<link rel="import" href="forms/bm-form.html">
+<link rel="import" href="forms/ds-form.html">
+<link rel="import" href="forms/ns-form.html">
+<link rel="import" href="forms/sr-form.html">
+<link rel="import" href="forms/ig-form.html">
+<link rel="import" href="forms/im-form.html">
+<link rel="import" href="forms/yn-form.html">
+
+<polymer-element name="question-comp" attributes="formdata">
+	<template>
+		<style>
+		:host{
+				/*background: url(imgs/bg3.jpg);*/
+				font-family: 'roboto';
+				font-weight: 300;
+				
+			}
+			::-webkit-input-placeholder { /* WebKit browsers */
+			    color:    #0f9d58;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			   color:    #0f9d58;
+			   opacity:  1;
+			}
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+			   color:    #0f9d58;
+			   opacity:  1;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			   color:    #0f9d58;
+			}
+			.submit{
+				color: #0f9d58;
+				border: 1px solid #0f9d58;
+			}
+			/*#option1 {
+				font-color: #0f9d58;
+				//border: 1px solid black
+			}*/
+			.quescard{
+				background: rgba(0,0,0,0.4);
+				color: white;
+				padding: 3%;
+				margin: 40px 0px 5px 0px;
+				width: 100%;
+				/*height: inherit;*/
+				box-sizing: border-box;
+
+			}
+			.theme-box{
+				position: absolute;
+				right: 0;
+				top: 0;
+				/*margin: 0px 0px 5px 5px;*/
+			}
+			
+			.container{
+				/*//max-width: 450px;*/
+				margin: 0;
+				position: absolute;
+				right: 0;
+				height: 100%;
+				width: 75%;
+				box-sizing: border-box;
+
+			}
+			.tabs {
+				width: 25%;
+				position: absolute;
+				left:0;
+			}
+			.whole{
+				max-width: 700px;
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			
+		</style>
+		<div class="whole" grid layout center center-justified>
+			<template if="{{list_show}}">
+				<paper-button raised on-click="{{button_single}}"> Single choice simple buttons </paper-button>
+				<paper-button raised on-click="{{button_multi}}"> Multi choice simple buttons </paper-button>
+				<paper-button on-click="{{image_grid}}"> Single choice image buttons </paper-button>
+				<paper-button on-click="{{image_multi}}"> multi choice image buttons </paper-button>
+				<paper-button on-click="{{drag_scaling}}"> Drag and rate </paper-button>
+				<paper-button on-click="{{star_rate}}"> Rating as heart icons </paper-button>
+				<paper-button on-click="{{number_scaling}}"> Rate on 1-10 </paper-button>
+				<paper-button on-click="{{yes_no}}"> Yes or no </paper-button>
+			</template>
+		<!-- </div> -->
+		<!-- <div main style="padding-top:10px;"> -->
+			<template if="{{bs_trigger}}">
+				<bs-form on-form-done="{{fillform}}"> </bs-form>
+			</template>
+			<template if="{{bm_trigger}}">
+				<bm-form on-form-done="{{fillform}}"> </bm-form>
+			</template>
+			<template if="{{ig_trigger}}">
+				<ig-form on-form-done="{{fillform}}"> </ig-form>
+			</template>
+			<template if="{{im_trigger}}">
+				<im-form on-form-done="{{fillform}}"> </im-form>
+			</template>
+			<template if="{{ds_trigger}}">
+				<ds-form on-form-done="{{fillform}}"> </ds-form>
+			</template>
+			<template if="{{sr_trigger}}">
+				<sr-form on-form-done="{{fillform}}"> </sr-form>
+			</template>
+			<template if="{{ns_trigger}}">
+				<ns-form on-form-done="{{fillform}}"> </ns-form>
+			</template>
+			<template if="{{yn_trigger}}">
+				<yn-form on-form-done="{{fillform}}"> </yn-form>
+			</template>
+		</div>
+		 
+		</div>
+
+	</template>
+
+	<script>
+	// Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+
+	Polymer('question-comp', {
+		questiondata: [],
+		bs_trigger:false,
+		bm_trigger:false,
+		ig_trigger:false,
+		im_trigger:false,
+		ds_trigger:false,
+		sr_trigger:false,
+		ns_trigger:false,
+		yn_trigger:false,
+		index: 0,
+		list_show: true,
+		ready: function() {
+			console.log("ready");
+
+		},
+		fillform: function(e,d,t) {
+			this.bs_trigger = false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+			// console.log(d.formdata);
+			var data = d.formdata;
+			// this.fire('clicked-next', {answer: this.answer});
+			this.fire('filled-ques', { formdata : data});
+
+		},
+		button_single: function(e,d,t) {
+			this.list_show = false;
+			this.bs_trigger = true;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		button_multi: function(e,d,t) {
+			this.list_show = false;
+			this.bm_trigger = true;
+			this.bs_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		image_grid: function(e,d,t) {
+			this.list_show = false;
+			this.ig_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		image_multi: function(e,d,t) {
+			this.list_show = false;
+			this.im_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		drag_scaling: function(e,d,t) {
+			this.list_show = false;
+			this.ds_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		star_rate: function(e,d,t) {
+			this.list_show = false;
+			this.sr_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.ns_trigger=false;
+			this.yn_trigger=false;
+		},
+		number_scaling: function(e,d,t) {
+			this.list_show = false;
+			this.ns_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.yn_trigger=false;
+		},
+		yes_no: function(e,d,t) {
+			this.list_show = false;
+			this.yn_trigger = true;
+			this.bs_trigger=false;
+			this.bm_trigger=false;
+			this.ig_trigger=false;
+			this.im_trigger=false;
+			this.ds_trigger=false;
+			this.sr_trigger=false;
+			this.ns_trigger=false;
+		}
+	})
+	</script>
+</polymer-element>
+

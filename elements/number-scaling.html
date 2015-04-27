@@ -41,6 +41,7 @@
 			}
 			.option-box .option.core-selected{
 				background: rgba(255,255,255,0.5);
+				color: #0f9d58;
 			}
 			.button-content {
 				width: 5%;
@@ -77,10 +78,10 @@
 			clicked: function(e,d,t) {
 				
 				this.answer = t.innerHTML;
-				console.log(this.answer);
+				this.fire('clicked-next', {answer: this.answer});
 			},
 			numArr: [1,2,3,4,5,6,7,8,9,10],
-			answer: 0
+			answer: ""
 		})
 	</script>
 </polymer-element>

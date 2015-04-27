@@ -93,7 +93,7 @@
             rated: false,
             stars: 10,
             value : 0,
-            answer: 0,
+            answer: "",
             onHovered: function(e,d,t) {
                 // if (!this.readOnly && !this.rated){
                     this.value = parseFloat(t.dataset.item, 10 );
@@ -111,7 +111,7 @@
                     this.value = parseFloat(t.dataset.item, 10 );
                     this.rated=true;
                     this.answer=this.value;
-                    console.log(this.answer);
+                    this.fire('clicked-next', {answer: this.answer});
                 // }
             },
             halfStar: function(e,d,t) {

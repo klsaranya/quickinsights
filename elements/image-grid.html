@@ -87,13 +87,10 @@
 			
 			clicked: function(e,d,t) {
 
-				this.answer = t.attributes['x-index'].value;
-				console.log(this.answer);
+				this.answer = 1 + + t.attributes['x-index'].value;
+				this.fire('clicked-next', {answer: this.answer});
 			},
-			next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
-			}
-			
+			answer: "",
 		}) 
 			
 	</script>

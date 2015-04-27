@@ -1,14 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../bower_components/ElementTransitions/css/elementTransitions.css"/>
-<script src="../bower_components/ElementTransitions/js/elementTransitions.js"></script>
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-
-<link rel="import" href="../bower_components/paper-elements/paper-elements.html">
-<link rel="import" href="../bower_components/core-elements/core-elements.html">
-
-
 <link rel = "import" href="../elements/drag-scaling.html">
 <link rel = "import" href="../elements/buttons-multi.html">
 <link rel = "import" href="../elements/buttons-single.html">
@@ -19,10 +10,9 @@
 <link rel = "import" href="../elements/yes-noother.html">
 <link rel = "import" href="../elements/image-multi.html">
 <link rel = "import" href="../elements/some-toolbar.html">
+<link rel = "import" href="../elements/submit-page.html">
 
-
-
-<polymer-element name="qi-app">
+<polymer-element name="qi-app" attributes="quesid">
 	<template>
 		<style>
 			:host{
@@ -42,7 +32,6 @@
 				padding: 3%;
 				margin: 40px 0px 5px 0px;
 				width: 100%;
-				/*height: inherit;*/
 				box-sizing: border-box;
 
 			}
@@ -79,7 +68,7 @@
 	<core-toolbar>
 		<div vertical layout center around-justified>Quick Insights</div>
 	</core-toolbar> 
-	  <core-animated-pages id="ani" on-clicked-next="{{next}}" on-clicked-back="{{back}}" transitions="slide-from-right">
+	  <core-animated-pages id="ani" on-clicked-next="{{next}}" on-clicked-back="{{back}}" on-done-event="{{multi}}" on-clicked-submit="{{save}}" transitions="slide-from-right">
 		<template repeat="{{data2, i in data}}">
 			<section layout vertical center class="theme-box">
 
@@ -106,7 +95,7 @@
 				<template if="{{ data2.ques_type == 'buttons-multi' }}">
 					<div class="container" vertical layout center center-justified>
 						<paper-shadow z="1" class="quescard">
-							<buttons-multi layout vertical content="{{data2}}"> </buttons-multi>
+							<buttons-multi layout vertical content="{{data2}}" id="storage"> </buttons-multi>
 						</paper-shadow>
 
 						<some-toolbar totalscreens="8"></some-toolbar>	
@@ -156,10 +145,18 @@
 			    <template if="{{ data2.ques_type == 'number-scaling' }}">
 					<div class="container" vertical layout center center-justified>
 						<paper-shadow z="1" class="quescard">
-							<number-scaling layout vertical content="{{data2}}"> </number-scaling>
+							<number-scaling layout vertical content="{{data2}}" id="storage"> </number-scaling>
 						</paper-shadow>
 
 						<some-toolbar totalscreens="8"></some-toolbar>	
+					</div>
+			    </template>
+
+			    <template if="{{ data2.ques_type == 'submit' }}">
+					<div class="container" vertical layout center center-justified>
+						<paper-shadow z="1" class="quescard">
+							<submit-page layout vertical content="{{response}}" id="storage"> </submit-page>
+						</paper-shadow>
 					</div>
 			    </template>
 			</section>
@@ -169,129 +166,53 @@
 	</template>
 
   	<script>
+  	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+  			
+
 	  Polymer('qi-app', {
-	  	backgrounds: ["imgs/bg2.png","imgs/bg1.jpg"],
 	  	up: true,
-	    max: 7,
-	   
-	    data: 
-			[{	
-				ques_type: "buttons-multi",
-				question: {
-
-					ques: "With which account do you prefer to login? With which account do you prefer to login? With which account do you prefer to login?",
-					img:  ""
-				}, 
-				options: ["facebook","google","twitter","other"]
-			},
-			{
-				ques_type: "yes-no",
-				question: {
-					ques: "Do you find the app useful?",
-					img: "http://rocketpost.com/media/open-uri20111206-24308-1i0xk9x-0-large..png"
-				},
-					 options:["yes", "no"]
-			},
-			{
-				ques_type: "buttons-single",
-				question: {
-					ques: "How satisfied are you with this purchase?",
-					img: "http://www.morningdressguide.com/wp-content/uploads/2012/08/vintage-hunter-pocket-watch.jpg"
-				},
-				options: ["Extremely satisfied","Very satisfied","Neutral","Somewhat satisfied","Not at all satisfied"]
-			},
-			{	
-				ques_type: "image-multi",
-				 question: {
-				 	ques: "Which subject do you like?",
-				 	img: ""
-				 }, 
-				 options: [
-				 	
-				 			{ 
-				 				src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-				 				label: "image1" 
-				 			},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image2"
-			 				},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image3"
-			 				},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image4"
-			 				}
-			 		
-			 		
-			 	]
-			 			  
-			},
-			{
-				ques_type: "star-rate",
-				question:{
-					ques: "How do you rate the teaching capability of the app?",
-					img: ""
-				}
-			},
-			{
-				ques_type: "number-scaling",
-				question:{
-					ques: "How do you rate the teaching capability of the app?",
-					img: ""
-				}
-			},
-			{
-				ques_type: "drag-scaling",
-				question: {
-					ques: "When contacted our support representative, how would you rate them on their knowledge and ability to handle your issue?",
-					img: ""
-				}
-			},
-			
-			{	
-				ques_type: "image-grid",
-				 question: {
-				 	ques: "Which subject do you like?",
-				 	img: ""
-				 }, 
-				 options: [
-				 	
-				 			{ 
-				 				src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-				 				label: "image1" 
-				 			},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image2"
-			 				},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image3"
-			 				},
-			 				{ 
-			 					src: "http://images.clipartpanda.com/geometry-clipart-Cropped-math-symbol-clipart.jpg",
-			 					label: "image4"
-			 				}
-			 		
-			 		
-			 	]
-			 			  
-			}],
+	    max: 0,
+	    ans: "",
+	    index: 0,
+	   	response: [],
+	   	obj: {},
+	  //   
+	  data : [],
 	  	next: function(e,d,t) {
-
+	  		index = t.selected;
+	  		ans = d.answer;
+	  		if(ans)
+	  			this.obj[index] = ans;
+	  		console.log(this.obj[index]);
+	      	console.log("Pura response: ");
+	      	console.log(this.obj);
+	      	console.log('---------------');
 	  		up=true;
+
 		    if (t.selected === this.max) 
 		      t.selected -= 1;
 		      
-		    else 
+		    else
 		      t.selected += 1;
 	      	
 	  	},
 	  	ready: function(){
 	  		console.log("ready");
+	  		var Question = Parse.Object.extend("Question");
+	  		var query = new Parse.Query(Question);
+	  		console.log(this.quesid);
+	  		var that = this;
+	  		query.equalTo("surveyId",this.quesid);
+	  		query.first({
+	  			success: function(obj) {
+	  				console.log(obj);
+	  				that.data = obj.get('data');
+	  				that.max = that.data.length;
+	  				console.log(that.max);
+	  			}
+	  		})
+
+
 	  	},
 	  	back: function(e,d,t) {
 
@@ -301,6 +222,43 @@
 	  			t.selected += 1;
 	  		else
 	  			t.selected -= 1;
+	  	},
+	  	multi: function(e,d,t) {
+	  		index = t.selected;
+	  		ans = d.answer;
+	  		this.obj[index] = ans;
+	  	},
+	  	s4: function() {
+	  		return Math.floor((1 + Math.random()) * 0x10000)
+			      .toString(16)
+			      .substring(1);
+	  	},
+	  	randomgen: function() {
+		  	return this.s4() + this.s4() + '-' + this.s4() + '-' + this.s4();
+	  	},
+	  	save: function(e,d,t) {
+	  		var str = this.randomgen();
+	  		console.log(str);
+	  		var Responses = Parse.Object.extend("Responses");
+	  		var Responses = new Responses();
+	  		var that = this;
+
+	  		Responses.set("surveyId", this.quesid);
+	  		Responses.set("answer", that.obj);
+	  		Responses.set("sessionid", str);
+
+	  		Responses.save(null, {
+
+	  			success: function(Responses) {
+	  				alert('Your response have just been saved successfully. Thank you for your time.');
+	  			},
+	  			error: function(Responses, error) {
+
+				    alert('Failed to create new object, with error code: ' + error.message);
+				}
+
+	  		});
+	  	
 	  	}
 
 	  });

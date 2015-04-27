@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel = "import" href="../graph-comp.html">
+
+<polymer-element name="im-graph" attributes="len ans">
+<template>
+  <style>
+  div{
+    height: 100%;
+    width: 100%;
+  }
+    graph-comp{
+      height:150px;
+      width:300px;
+    }
+  </style>
+<div>
+  <graph-comp array="{{data}}"></graph-comp>
+</div>
+ 
+	
+</template>
+<script>
+Polymer('im-graph', {
+	data:[],
+	ready: function() {
+		console.log("im-graph ready");
+	},
+	ansChanged: function(){
+    var tot = this.len;
+    var array = this.ans;
+
+    for(var j=0;j<=tot;j++)
+    {
+      var count=0;
+      for(var i=0;i<array.length;i++)
+      { 
+        var a = array[i];
+        var n = a.search(j);
+        if(n!=-1)
+          count++;
+      }
+      this.data[j]=count;
+    }
+    console.log(this.data);
+  }
+});
+
+</script>
+</polymer-element>

@@ -1,0 +1,17 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="submit-page">
+	<template>
+		<style> </style>
+		<div vertical layout wrap>
+			<paper-button class="option" on-click="{{clicked}}">SUBMIT</paper-button>
+		</div>
+	</template>
+
+	<script>
+		Polymer('submit-page', {
+			clicked: function() {
+				this.fire('clicked-submit');
+			}
+		})
+	</script>

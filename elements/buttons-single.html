@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
 <link rel="import" href="../bower_components/core-elements/core-elements.html">
 
-<polymer-element name="buttons-single" attributes="content response">
+<polymer-element name="buttons-single" attributes="content answer">
 	<template>
 		<style>
 
@@ -66,11 +66,11 @@
 		Polymer( 'buttons-single', {
 
 			clicked: function(e,d,t) {
-				this.response.text = t.innerHTML;
-				this.response.index = t.attributes['x-index'].value;
-				this.fire('enable-next');
+				this.answer = 1 + + t.attributes['x-index'].value;
+				//this.answer.index = t.attributes['x-index'].value;
+				this.fire('clicked-next', {answer: this.answer});
 			},
-			response: { text: "", index:0 }
+			answer: ""
 
 		})
 	</script>

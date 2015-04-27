@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="graph-comp" attributes="array mean">
+
+<template>
+<!-- <p>{{mean}}</p> -->
+ <svg id="chart"></svg>
+  
+</template>
+
+<script>
+Polymer('graph-comp', {
+  redraw: function(){
+    var charDiv = this.shadowRoot.querySelector('#chart');
+    var chart = d3.select(charDiv);
+    chart.selectAll("*").remove();
+
+    var data = this.array;
+    console.log(data);
+    var width = 300,
+        height = 150;
+      var y = d3.scale.linear()
+        .domain([0, d3.max(data)+1])
+          .range([0, height]);
+
+      chart.attr("width", width)
+          .attr("height", height);
+
+
+      var widthScale = d3.scale.linear()
+                .domain([0, data.length])
+                .range([0,width]);
+
+      var barWidth = width / data.length;
+
+      var bar = chart.selectAll("g");
+
+      bar.data(data).enter().append("g")
+          .append("rect")
+          .attr("x", function(d, i) { return i*barWidth - .5; })
+          .attr("y", function(d) { return height - .5; })   
+          .attr("width", barWidth - 5)
+          .attr("height",0.5)
+          .attr("fill","#1abc9c")
+          .transition()
+          .duration(1500)
+          .attr("y", function(d) { return height - y(d); })
+          .attr("height", function(d) { return y(d); } );
+
+      bar.data(data).enter().append("text")
+            .attr("x", function(d, i) { return (i*barWidth) + (barWidth/2) - 5; })
+            .attr("y", function(d) { return height - y(d) - 15; })
+            .attr("dy", ".75em")
+            .transition()
+            .delay(1600)
+            .text(function(d) { return d; });
+
+
+
+  },
+  arrayChanged: function(attrName, oldVal, newVal) {
+    //var newVal = this.getAttribute(attrName);
+    this.redraw();
+  },
+  ready: function() {
+    // console.log(array);
+
+   } 
+  });
+</script>
+
+</polymer-element>

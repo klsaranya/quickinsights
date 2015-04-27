@@ -84,15 +84,10 @@
 		Polymer('drag-scaling', {
 
 			changed: function(e,d,t) {
-				
 				this.answer=t.immediateValue;
-				console.log(this.answer);
-
+				this.fire('done-event',  {answer: this.answer});
 			},
-			next: function(e,d,t) {
-				this.fire('done-event', {answer: this.answer});
-			},
-			answer: 0
+			answer: ""
 		}
 			)
 	</script>

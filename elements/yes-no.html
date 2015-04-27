@@ -69,8 +69,8 @@
 			<!-- Options -->
 			 <div vertical layout center-justified center class="option-box">
 				<paper-radio-group>
-					<paper-radio-button label="yes" name ="yes" on-click="{{clicked}}"></paper-radio-button>
-					<paper-radio-button label="no" name ="no" on-click="{{clicked}}"></paper-radio-button>
+					<paper-radio-button label="{{content.options[0]}}" name ="{{content.options[0]}}" index="1" on-click="{{clicked}}"></paper-radio-button>
+					<paper-radio-button label="{{content.options[1]}}" name ="{{content.options[1]}}" index="2" on-click="{{clicked}}"></paper-radio-button>
 				</paper-radio-group>
 			</div>
 
@@ -81,8 +81,8 @@
 		Polymer( 'yes-no', {
 
 			clicked: function(e,d,t) {
-				this.answer = t.attributes['name'].value;
-				console.log(this.answer);
+				this.answer = t.attributes['index'].value;
+				this.fire('clicked-next', {answer: this.answer});
 			}
 
 		})

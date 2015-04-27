@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="styles.css" shim-shadowdom>
+
+<polymer-element name="home-page">
+	<template>
+		<style>
+		</style>
+		<core-scaffold id="scaffold">
+		    <nav>
+		    	<core-toolbar><span>Surveys</span></core-toolbar>
+				  <core-menu selected="0">
+				  <template repeat
+				    <paper-item noink>
+				      <core-icon icon="label-outline"></core-icon>
+				      <a href="#one">Single</a>
+				    </paper-item>
+				    <paper-item noink>
+				      <core-icon icon="label-outline"></core-icon>
+				      <a href="#two">page</a>
+				    </paper-item>
+				    ...
+				  </core-menu>
+		    </nav>
+		    <core-toolbar tool>Application</core-toolbar>
+		    <div>Main content</div>
+		</core-scaffold>
+	</template>
+	<script>
+	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+
+	Polymer('home-page', {
+		surveynames: [],
+		surveyids: [],
+		ready: function() {
+			var user = Parse.User.current();
+			var username = user.get("username");
+			var Surveys = Parse.Object.extend("Surveys");
+			var that = this;
+
+			var query = new Parse.Query(Surveys);
+		    query.equalTo("creatorUsername", username);
+		    query.find({
+		      success: function(usersPosts) {
+		      	for (var i = 0; i < usersPosts.length; i++) { 
+      				that.surveynames[i]=usersPosts[i].get("name");
+      				that.surveyids[i]=usersPosts[i].get("surveyId");
+   				}
+   				console.log(that.surveyids);
+   				console.log(that.surveynames);
+			}
+				error: function(user, error) {
+			    // The login failed. Check error to see why.
+			    alert("Error: " + error.code + " " + error.message);
+			}
+		})
+
+	});
+	</script>
+</polymer-element>

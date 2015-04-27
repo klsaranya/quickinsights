@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel = "import" href="../graph-comp.html">
+
+<polymer-element name="yn-graph" attributes="ans len">
+<template>
+  <style>
+  div{
+    height: 100%;
+    width: 100%;
+  }
+    graph-comp{
+      height:150px;
+      width:300px;
+    }
+  </style>
+   <div>
+     <graph-comp array="{{data}}"></graph-comp>
+  </div>
+ </template>
+<script>
+
+
+Polymer('yn-graph', {
+	data:[],
+	ready: function() {
+		console.log("yn-graph ready");
+	},
+	ansChanged: function(){
+
+	console.log(this.ans);
+    for(var i=0;i<=this.len;i++)
+    {
+      var count = 0;
+      for(var j=0;j<this.ans.length;j++)
+      {
+        if(this.ans[j] == i)
+          count++;
+      }  
+      this.data[i]=count;
+    }
+    console.log(this.data);
+    }
+});
+
+</script>
+</polymer-element>

@@ -1,0 +1,200 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="question-comp.html">
+<link rel="import" href="title-page.html">
+
+<polymer-element name="question-naire" attributes="formdata">
+	<template>
+		<style>
+		:host{
+				/*background: url(imgs/bg3.jpg);*/
+				font-family: 'roboto';
+				font-weight: 300;
+				
+			}
+			::-webkit-input-placeholder { /* WebKit browsers */
+			    color:    #0f9d58;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			   color:    #0f9d58;
+			   opacity:  1;
+			}
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+			   color:    #0f9d58;
+			   opacity:  1;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10+ */
+			   color:    #0f9d58;
+			}
+			.submit{
+				color: #0f9d58;
+				border: 1px solid #0f9d58;
+			}
+			/*#option1 {
+				font-color: #0f9d58;
+				//border: 1px solid black
+			}*/
+			.quescard{
+				background: rgba(0,0,0,0.4);
+				color: white;
+				padding: 3%;
+				margin: 40px 0px 5px 0px;
+				width: 100%;
+				/*height: inherit;*/
+				box-sizing: border-box;
+
+			}
+			.theme-box{
+				position: absolute;
+				right: 0;
+				top: 0;
+				/*margin: 0px 0px 5px 5px;*/
+			}
+			.list{
+				border-top: 1px solid #0f9d58;
+				border-bottom: 1px solid #0f9d58;
+				width: 50%;
+				position: relative;
+				left: 0;
+			}
+			.boxes{
+				width: 100px;
+				height: 100px;
+				margin: 0;
+				text-align: center;
+			}
+			.container{
+				/*//max-width: 450px;*/
+				margin: 0;
+				position: absolute;
+				right: 0;
+				height: 100%;
+				width: 75%;
+				box-sizing: border-box;
+
+			}
+			.tabs {
+				width: 25%;
+				position: absolute;
+				left:0;
+			}
+			.whole{
+				max-width: 700px;
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+			
+		</style>
+
+		<div class="whole" horizontal layout center center-justified>
+			
+			<core-drawer-panel>
+				<div drawer style="padding-top:20px;" vertical layout>
+					<div>
+						<paper-button class="boxes" vertical layout on-click="{{addTitle}}"> Addtitle</paper-button>
+					</div>
+					<hr>
+					<div class="list">
+						<template repeat="{{x,index in questiondata}}">
+							<paper-button class="boxes" vertical layout on-click="{{addQuestion}}">{{x.questype}}</paper-button>
+						</template>
+						<paper-button class="boxes" vertical layout on-click="{{add}}">
+							<core-icon icon="add-box" style="width:25%; text-align:center; padding:0;"></core-icon>
+						</paper-button>
+					</div>
+					<hr>
+					<div>
+						<paper-button class="boxes" vertical layout on-click="{{addExit}}"> Add exit</paper-button>
+					</div>
+				</div>
+				<div main style="padding-top:10px;">
+					<template if="{{showQuestion}}">
+						<question-comp on-filled-ques="{{fillform}}"></question-comp>
+					</template>
+					<template if="{{showTitle}}">
+						<title-page on-filled-title="{{fillTitle}}"></title-page>
+						<!-- <question-comp on-filled-ques="{{fillform}}"></question-comp> -->
+					</template>
+					<template if="{{showExit}}">
+						<!-- <question-comp on-filled-ques="{{fillform}}"></question-comp> -->
+					</template>
+				</div>
+			</core-drawer-panel>
+		</div>
+		 
+		</div>
+
+	</template>
+
+	<script>
+	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+
+	Polymer('question-naire', {
+		showQuestion: false,
+		showTitle: false,
+		showExit: false,
+		questiondata: [],
+		index: 0,
+		sname: "",
+		name: function(e,d,t) {
+			this.sname = t.value;
+			console.log(this.sname);
+		},
+		fillform: function(e,d,t) {
+
+			console.log(d.formdata);
+			this.questiondata[this.index++] = _.cloneDeep(d.formdata);
+			// console.log(this.questiondata);
+
+		},
+	  	add: function(e,d,t) {
+			this.questiondata.push({});
+		},
+		addTitle: function(e,d,t) {
+			console.log("showTitle");
+			this.showTitle = true;
+			this.showExit = false;
+			this.showQuestion = false;
+		},
+		addExit: function(e,d,t) {
+			console.log("showExit");
+			this.showExit = true;
+			this.showQuestion = false;
+			this.showTitle = false;
+		},
+		addQuestion: function(e,d,t) {
+			this.showExit = false;
+			this.showQuestion = true;
+			this.showTitle = false;
+		}
+		// sumbit_form: function(e,d,t) {
+
+		// 	var user = Parse.User.current();
+		// 	var last = { ques_type: "submit" };
+		// 	var str = this.randomgen();
+		// 	this.questiondata[this.index]=last;
+		// 	console.log(this.questiondata);
+		// 	var Surveys = Parse.Object.extend("Surveys");
+	 //  		var Surveys = new Surveys();
+
+	 //  		Surveys.set("name", this.sname);
+	 //  		Surveys.set("data", this.questiondata);
+	 //  		Surveys.set("surveyId", str);
+	 //  		Surveys.set("creatorUsername", user.get("username"));
+
+
+	 //  		Surveys.save(null, {
+
+	 //  			success: function(Surveys) {
+	 //  				alert('New object created successfully with objectId: ' + Surveys.id);
+	 //  			},
+	 //  			error: function(Surveys, error) {
+		// 		    alert('Failed to create new object, with error code: ' + error.message);
+		// 		}
+
+	 //  		});
+		// }
+	});
+	</script>
+</polymer-element>
+

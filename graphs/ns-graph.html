@@ -1,0 +1,51 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel = "import" href="../graph-comp.html">
+
+<polymer-element name="ns-graph" attributes="ans len">
+<template>
+ <style>
+  div{
+    height: 100%;
+    width: 100%;
+  }
+    graph-comp{
+      height:150px;
+      width:300px;
+    }
+  </style>
+
+  <div>
+     <graph-comp array="{{data}}"></graph-comp>
+  </div>
+
+ </template>
+<script>
+
+Polymer('ns-graph', {
+	data:[],
+  avg:0.0,
+  ready: function() {
+    console.log("ns-graph ready");
+  },
+  ansChanged: function(){
+    var mean = 0;
+    console.log(this.ans);
+    for(var i=0;i<=10;i++)
+    {
+      var count = 0;
+      for(var j=0;j<this.ans.length;j++)
+      {
+        mean = mean + this.ans[j];
+        if(this.ans[j] == i)
+          count++;
+       } 
+      this.data[i]=count;
+    }
+    console.log(this.data);
+    this.avg = mean/(11*this.ans.length);
+    }
+});
+
+</script>
+</polymer-element>

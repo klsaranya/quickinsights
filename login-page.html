@@ -1,0 +1,89 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="elements/styles.css" shim-shadowdom>
+<link rel="import" href="qi-graph.html">
+<link rel="import" href="question-naire.html">
+
+<polymer-element name="login-page">
+	<template>
+		<style>
+		core-icon-button{
+			position: relative;
+			right:0;
+		}
+		</style>
+		<core-scaffold id="scaffold">
+		    <nav>
+		    	<core-toolbar><span>Surveys</span></core-toolbar>
+				  <core-menu selected="0">
+					 <template repeat="{{x, i in surveynames}}">
+					    <paper-item noink>
+					      <core-icon icon="label-outline"></core-icon>
+					      <paper-button on-click="{{selected}}" x-index="{{i}}"> {{x}} </paper-button>
+					    </paper-item>
+					</template>
+				  </core-menu>
+		    </nav>
+		    <core-toolbar tool>
+		      <div flex>Quick insights</div>
+			  <core-icon-button icon="refresh"></core-icon-button>
+			  <core-icon-button icon="add" on-click="{{addSurvey}}"></core-icon-button>
+		    </core-toolbar>
+		    <div>
+		    	<template if="{{show}}">
+		    		Response graphs
+		    		<qi-graph surveyid="{{current}}"></qi-graph>
+		    	</template>
+		    	<template if="{{newsurvey}}">
+		    		Form a new survey
+		    		<question-naire></question-naire>
+		    	</template>
+		    </div>
+		</core-scaffold>
+	</template>
+	<script>
+	Parse.initialize("df5aOQc2My8UzHgWQOCbI5JO0g8ZKpjDQofQAe31", "4ndVE9l8oS9aUUgZinfJL81hmgtzkhCEM7DGXYfn");
+
+	Polymer('login-page', {
+		surveynames: [],
+		surveyids: [],
+		current: "",
+		show: false,
+		newsurvey: false,
+		ready: function() {
+			console.log("ready");
+			var user = Parse.User.current();
+			var username = user.get("username");
+			var Surveys = Parse.Object.extend("Surveys");
+			var that = this;
+
+			var query = new Parse.Query(Surveys);
+		    query.equalTo("creatorUsername", username);
+		    query.find({
+		      success: function(usersPosts) {
+		      	for (var i = 0; i < usersPosts.length; i++) { 
+      				that.surveynames[i]=usersPosts[i].get("name");
+      				that.surveyids[i]=usersPosts[i].get("surveyId");
+   				}
+   				console.log(that.surveyids);
+   				console.log(that.surveynames);
+			},
+				error: function(error) {
+			    // The login failed. Check error to see why.
+			    alert("Error: " + error.code + " " + error.message);
+			}
+		})
+	},
+	addSurvey: function(e,d,t) {
+		this.show = false;
+		this.newsurvey = true;
+	},
+	selected: function(e,d,t) {
+		this.show = true;
+		this.newsurvey = false;
+		var index = t.attributes['x-index'].value;
+		this.current = this.surveyids[index];
+		console.log(this.current);
+	}
+	});
+	</script>
+</polymer-element>
